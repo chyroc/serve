@@ -20,6 +20,9 @@ func ReadPath(path string) (bool, string, error) {
 	}
 
 	if fileinfo.IsDir() {
+		if _, err := os.Stat(path + "index.html"); err == nil {
+			return readFile(path + "index.html")
+		}
 		content, err := readDir(path)
 		if err != nil {
 			return false, "", err
@@ -27,12 +30,7 @@ func ReadPath(path string) (bool, string, error) {
 		return true, content, nil
 	}
 
-	bs, err := ioutil.ReadFile(path)
-	if err != nil {
-		return false, "", err
-	}
-
-	return false, string(bs), err
+	return readFile(path)
 }
 
 func readDir(path string) (string, error) {
@@ -57,4 +55,13 @@ func readDir(path string) (string, error) {
 		"Path": path,
 		"Dirs": res,
 	}), nil
+}
+
+func readFile(path string) (bool, string, error) {
+	bs, err := ioutil.ReadFile(path)
+	if err != nil {
+		return false, "", err
+	}
+
+	return strings.HasSuffix(path, ".html"), string(bs), err
 }
