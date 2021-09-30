@@ -31,6 +31,10 @@ go instll github.com/chyroc/serve@latest
 serve
 ```
 
+```shell
+serve docs
+```
+
 |  |  |
 | --- | --- |
 | <img src="./screenshots/1.png" width="250"></a> | <img src="./screenshots/2.png" width="250"></a> | 

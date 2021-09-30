@@ -3,14 +3,22 @@ package internal
 import (
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
-func ReadPath(path string) (bool, string, error) {
+func ReadPath(dir, path string) (bool, string, error) {
+	if dir == "." {
+		dir = "./"
+	}
 	path = strings.TrimLeft(path, "/")
 	if !strings.HasPrefix(path, "./") {
 		path = "./" + path
 	}
+
+	// path: ./a/b
+	path = filepath.Join(dir, path)
+
 	fileinfo, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -20,10 +28,13 @@ func ReadPath(path string) (bool, string, error) {
 	}
 
 	if fileinfo.IsDir() {
+		if !strings.HasSuffix(path, "/") {
+			path = path + "/"
+		}
 		if _, err := os.Stat(path + "index.html"); err == nil {
 			return readFile(path + "index.html")
 		}
-		content, err := readDir(path)
+		content, err := readDir(dir, path)
 		if err != nil {
 			return false, "", err
 		}
@@ -33,14 +44,14 @@ func ReadPath(path string) (bool, string, error) {
 	return readFile(path)
 }
 
-func readDir(path string) (string, error) {
+func readDir(dir, path string) (string, error) {
 	dirs, err := os.ReadDir(path)
 	if err != nil {
 		return "", err
 	}
 
 	res := []string{}
-	if path != "./" {
+	if strings.TrimRight(path, "/") != strings.TrimRight(dir, "/") {
 		res = append(res, "../")
 	}
 	for _, dir := range dirs {
