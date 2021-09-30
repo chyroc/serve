@@ -9,6 +9,12 @@
 
 ![](./header.png)
 
+## Features
+
+- Support access to static files and folders
+- Support random port selection
+- Local logging
+
 ## Install
 
 ```shell
