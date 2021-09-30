@@ -27,17 +27,6 @@ go instll github.com/chyroc/serve@latest
 
 ## Usage
 
-```go
-package main
-
-import (
-	"fmt"
-
-	"github.com/chyroc/serve"
-)
-
-func main() {
-	res := go_project_template.Incr(1)
-	fmt.Println(res) // output: 2
-}
+```shell
+serve
 ```
