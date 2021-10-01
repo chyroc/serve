@@ -11,9 +11,10 @@
 
 ## Features
 
-- Support access to static files and folders
-- Support random port selection
+- Access to static files and folders
+- Random port selection
 - Local logging
+- Localhost HTTPS
 
 ## Install
 
@@ -27,8 +28,22 @@ go instll github.com/chyroc/serve@latest
 
 ## Usage
 
+Simple to use
+
 ```shell
 serve
+```
+
+Deploy a directory
+
+```shell
+serve ./some-dic
+```
+
+Enable https
+
+```shell
+serve --https
 ```
 
 |  |  |
