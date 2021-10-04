@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -30,6 +31,8 @@ func main() {
 func runApp(c *cli.Context) error {
 	dir := c.Args().First()
 	isHttps := c.Bool("https")
+
+	fmt.Printf("dir=%q, https=%v\n", dir, isHttps)
 
 	r := internal.CreateEngine(dir)
 
