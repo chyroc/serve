@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func ReadPath(dir, path string) (bool, string, error) {
+func ReadPath(dir, path string) (string, string, error) {
 	if dir == "." {
 		dir = "./"
 	}
@@ -22,9 +22,9 @@ func ReadPath(dir, path string) (bool, string, error) {
 	fileinfo, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return true, BuildTemplate(Html404Template, map[string]interface{}{"Path": path}), nil
+			return htmlContentType, BuildTemplate(Html404Template, map[string]interface{}{"Path": path}), nil
 		}
-		return false, "", err
+		return txtContentType, "", err
 	}
 
 	if fileinfo.IsDir() {
@@ -36,9 +36,9 @@ func ReadPath(dir, path string) (bool, string, error) {
 		}
 		content, err := readDir(dir, path)
 		if err != nil {
-			return false, "", err
+			return txtContentType, "", err
 		}
-		return true, content, nil
+		return htmlContentType, content, nil
 	}
 
 	return readFile(path)
@@ -68,11 +68,11 @@ func readDir(dir, path string) (string, error) {
 	}), nil
 }
 
-func readFile(path string) (bool, string, error) {
+func readFile(path string) (string, string, error) {
 	bs, err := ioutil.ReadFile(path)
 	if err != nil {
-		return false, "", err
+		return txtContentType, "", err
 	}
 
-	return strings.HasSuffix(path, ".html"), string(bs), err
+	return pathToContentType(path), string(bs), err
 }
