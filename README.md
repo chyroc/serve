@@ -15,6 +15,7 @@
 - Random port selection
 - Local logging
 - Localhost HTTPS
+- Identify the Content-Type of the file
 
 ## Install
 
