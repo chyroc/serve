@@ -20,6 +20,10 @@ func main() {
 				Aliases: []string{"S"},
 				Usage:   "host with https",
 			},
+			&cli.BoolFlag{
+				Name:  "disable-cors",
+				Usage: "disable cors",
+			},
 		},
 	}
 
@@ -31,10 +35,11 @@ func main() {
 func runApp(c *cli.Context) error {
 	dir := c.Args().First()
 	isHttps := c.Bool("https")
+	isDisableCors := c.Bool("disable-cors")
 
-	fmt.Printf("dir=%q, https=%v\n", dir, isHttps)
+	fmt.Printf("dir=%q, https=%v, isDisableCors=%v\n", dir, isHttps, isDisableCors)
 
-	r := internal.CreateEngine(dir)
+	r := internal.CreateEngine(dir, isDisableCors)
 
 	return internal.Listen(r, isHttps)
 }
