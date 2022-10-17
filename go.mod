@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/chyroc/mkcert v1.6.0
 	github.com/gin-gonic/gin v1.8.1
-	github.com/urfave/cli/v2 v2.14.1
+	github.com/urfave/cli/v2 v2.20.2
 )
 
 require (
