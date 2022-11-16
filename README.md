@@ -24,7 +24,7 @@ brew install chyroc/tap/serve
 ```
 
 ```shell
-go instll github.com/chyroc/serve@latest
+go install github.com/chyroc/serve@latest
 ```
 
 ## Usage
